@@ -15,15 +15,30 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Data activity filter version information
+ * message file description here.
  *
  * @package    local_message
- * @copyright  2019 Shamim Rezaie <shamim@moodle.com>
+ * @copyright  2021 SysBind Ltd. <service@sysbind.co.il>
+ * @auther     schindlerl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+require_once(__DIR__ . '/../../config.php');
+global $CFG;
+global $DB;
+$PAGE->set_url(new moodle_url('/local/message/manage.php'));
+$PAGE->set_context(\context_system::instance());
+$PAGE->set_title('Message manage');
 
-$plugin->version   = 2021102501;
-$plugin->requires  = 2021052500;  // Requires this Moodle version.
-$plugin->component = 'local_message';
+$messages = $DB->get_records('local_message');
+
+$templatecontext = (object)[
+    'messages' => array_values($messages),
+    'editurl' => new moodle_url('/local/message/edit.php'),
+];
+
+echo $OUTPUT->header();
+
+echo $OUTPUT->render_from_template('local_message/manage', $templatecontext);
+
+echo $OUTPUT->footer();

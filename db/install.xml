@@ -4,22 +4,22 @@
        xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
     <TABLES>
-        <TABLE NAME="message" COMMENT="each record is a message">
+        <TABLE NAME="local_message" COMMENT="each record is a message">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-                <FIELD NAME="messageText" TYPE="text" LENGTH="100" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="messageType" TYPE="text" LENGTH="100" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="messagetext" TYPE="text" LENGTH="100" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="messagetype" TYPE="text" LENGTH="100" NOTNULL="true" SEQUENCE="false"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
             </KEYS>
         </TABLE>
-        <TABLE NAME="message_read" COMMENT="each record is a user reacord of a message read">
+        <TABLE NAME="local_message_read" COMMENT="each record is a user reacord of a message read">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="messageid" TYPE="text" LENGTH="100" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="userid" TYPE="text" LENGTH="100" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="timeread" TYPE="datetime" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timeread" TYPE="int" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

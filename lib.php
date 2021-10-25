@@ -24,5 +24,33 @@
  */
 
 function local_message_before_footer(){
-   \core\notification::add('test');
+    global $DB, $USER;
+
+    $sql = "SELECT lm.id, lm.messagetype, lm.messagetext 
+            FROM mdl_local_message lm 
+            LEFT OUTER JOIN mdl_local_message_read lmr 
+            ON lm.id = lmr.messageid
+            WHERE lmr.userid <> :userid 
+            OR lmr.userid IS NULL";
+
+    $params = [
+        'userid' => $USER->id,
+    ];
+
+    $messages = $DB->get_records_sql($sql,$params);
+
+    $choices = array();
+    $choices['0'] = \core\output\notification::NOTIFY_SUCCESS;
+    $choices['1'] = \core\output\notification::NOTIFY_INFO;
+    $choices['2'] = \core\output\notification::NOTIFY_WARNING;
+    $choices['3'] = \core\output\notification::NOTIFY_ERROR;
+    foreach ($messages as $message) {
+        \core\notification::add($message->messagetext, $choices[$message->messagetype]);
+
+        $readrecord = new stdClass();
+        $readrecord->messageid = $message->id;
+        $readrecord->userid = $USER->id;
+        $readrecord->timeread = time();
+        $DB->insert_record('local_message_read', $readrecord);
+    }
 }
