@@ -23,21 +23,22 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-function local_message_before_footer(){
+function local_message_before_footer()
+{
     global $DB, $USER;
 
     $sql = "SELECT lm.id, lm.messagetype, lm.messagetext 
-            FROM mdl_local_message lm 
-            LEFT OUTER JOIN mdl_local_message_read lmr 
+            FROM {local_message} lm 
+            LEFT OUTER JOIN {local_message_read} lmr 
             ON lm.id = lmr.messageid
-            WHERE lmr.userid <> :userid 
+            WHERE lmr.userid != :userid 
             OR lmr.userid IS NULL";
 
     $params = [
         'userid' => $USER->id,
     ];
 
-    $messages = $DB->get_records_sql($sql,$params);
+    $messages = $DB->get_records_sql($sql, $params);
 
     $choices = array();
     $choices['0'] = \core\output\notification::NOTIFY_SUCCESS;

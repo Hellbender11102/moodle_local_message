@@ -26,10 +26,19 @@
     {
     }
 }}
-<h1>List of messages</h1>
-{{#messages}}
-    <p>{{messagetext}} {{messagetype}}</p>
-{{/messages}}
-
+<h1>{{#str}} headline, local_message {{/str}}</h1>
+<table>
+    <tr>
+        <th>{{#str}} tableHeadOne, local_message {{/str}}</th>
+        <th>{{#str}} tableHeadTwo, local_message {{/str}}</th>
+    </tr>
+    {{#messages}}
+        <tr>
+            <td class="ml-0">{{messagetext}}</td>
+            <td class="mr-auto">{{messagetype}}</td>
+        </tr>
+    {{/messages}}
+</table>
 <hr>
-<input type="button" class="btn btn-primary" onclick="location.href='{{editurl}}'" value="Create message">
+<input type="button" class="btn btn-primary" onclick="location.href='{{editurl}}'"
+       value=" {{#str}} btnEdit, local_message {{/str}}">

@@ -15,31 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * message file description here.
+ * ${ local_message} file description here.
  *
  * @package    local_message
  * @copyright  2021 SysBind Ltd. <service@sysbind.co.il>
  * @auther     schindlerl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+$string['formTextfieldName'] = 'Message text';
+$string['formTextfieldInput'] = 'Please enter message';
+$string['formButton'] = 'Create message';
 
-require_once(__DIR__ . '/../../config.php');
-global $CFG;
-global $DB;
-$PAGE->set_url(new moodle_url('/local/message/manage.php'));
-$PAGE->set_context(\context_system::instance());
-$PAGE->set_title('Message manage');
+$string['btnEdit'] = 'Message edit';
+$string['canceld'] = 'Canceled';
+$string['updated'] = 'You created a message with title';
 
-$messages = $DB->get_records('local_message');
-
-$templatecontext = (object)[
-    'messages' => array_values($messages),
-    'editurl' => new moodle_url('/local/message/edit.php'),
-    'btnEdit' => get_string('btnEdit','local_message'),
-];
-
-echo $OUTPUT->header();
-
-echo $OUTPUT->render_from_template('local_message/manage', $templatecontext);
-
-echo $OUTPUT->footer();
+$string['headline'] = 'List of messages';
+$string['type'] = 'Message type';
+$string['tableHeadOne'] = 'Message';
+$string['tableHeadTwo'] = 'Type';

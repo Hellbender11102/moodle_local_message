@@ -33,16 +33,16 @@ class edit extends moodleform {
 
         $mform = $this->_form; // Don't forget the underscore!
 
-        $mform->addElement('textarea', 'messagetext', 'Message text');                      // Add elements to your form
+        $mform->addElement('textarea', 'messagetext', get_string('formTextfieldName','local_message'));                      // Add elements to your form
         $mform->setType('messagetext', PARAM_NOTAGS);                      //Set type of element
-        $mform->setDefault('messagetext', 'Please enter message');          //Default value
+        $mform->setDefault('messagetext', get_string('formTextfieldInput','local_message'));          //Default value
 
         $choices = array();
         $choices['0'] = \core\output\notification::NOTIFY_SUCCESS;
         $choices['1'] = \core\output\notification::NOTIFY_INFO;
         $choices['2'] = \core\output\notification::NOTIFY_WARNING;
         $choices['3'] = \core\output\notification::NOTIFY_ERROR;
-        $mform->addElement('select', 'messagetype','Message Type', $choices);
+        $mform->addElement('select', 'messagetype',get_string('type','local_message'), $choices);
         $mform->setDefault('messagetype', 1);
 
         $this->add_action_buttons();

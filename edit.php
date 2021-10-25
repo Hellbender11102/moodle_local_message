@@ -30,7 +30,7 @@ global $DB;
 
 $PAGE->set_url(new moodle_url('/local/message/edit.php'));
 $PAGE->set_context(\context_system::instance());
-$PAGE->set_title('Message edit');
+$PAGE->set_title(get_string('formTextfieldName','local_message'));
 
 
 $mform = new edit();
@@ -38,7 +38,7 @@ $mform = new edit();
 
 if ($mform->is_cancelled()) {
     //go back to manage page
-    redirect($CFG->wwwroot . '/local/message/manage.php','Canceled');
+    redirect($CFG->wwwroot . '/local/message/manage.php',get_string('canceld','local_message'));
 } elseif ($fromform = $mform->get_data()) {
     //insert the data in the db
     $recordToInsert = new stdClass();
@@ -46,7 +46,7 @@ if ($mform->is_cancelled()) {
     $recordToInsert->messagetype = $fromform->messagetype;
 
     $DB->insert_record('local_message',$recordToInsert);
-    redirect($CFG->wwwroot . '/local/message/manage.php','You created a message with title '.  $fromform->messagetext);
+    redirect($CFG->wwwroot . '/local/message/manage.php',get_string('updated','local_message'). ' ' .  $fromform->messagetext);
 }
 
 
