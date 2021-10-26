@@ -26,11 +26,10 @@
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/local/message/form/edit.php');
 
-global $DB;
 
 $PAGE->set_url(new moodle_url('/local/message/edit.php'));
 $PAGE->set_context(\context_system::instance());
-$PAGE->set_title(get_string('formTextfieldName','local_message'));
+$PAGE->set_title(get_string('formTextfieldName', 'local_message'));
 
 
 $mform = new edit();
@@ -38,15 +37,13 @@ $mform = new edit();
 
 if ($mform->is_cancelled()) {
     //go back to manage page
-    redirect($CFG->wwwroot . '/local/message/manage.php',get_string('canceld','local_message'));
+    redirect($CFG->wwwroot . '/local/message/manage.php', get_string('canceld', 'local_message'));
 } elseif ($fromform = $mform->get_data()) {
     //insert the data in the db
-    $recordToInsert = new stdClass();
-    $recordToInsert->messagetext = $fromform->messagetext;
-    $recordToInsert->messagetype = $fromform->messagetype;
+    $messageManager = new message_manager();
+    $messageManager->create_message($fromform->messagetext, $fromform->messagetype);
 
-    $DB->insert_record('local_message',$recordToInsert);
-    redirect($CFG->wwwroot . '/local/message/manage.php',get_string('updated','local_message'). ' ' .  $fromform->messagetext);
+    redirect($CFG->wwwroot . '/local/message/manage.php', get_string('updated', 'local_message') . ' ' . $fromform->messagetext);
 }
 
 
