@@ -23,9 +23,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__ . '/../../config.php');
-require_once($CFG->dirroot . '/local/message/form/edit.php');
+use local_message\form\edit;
+use local_message\manager;
 
+require_once(__DIR__ . '/../../config.php');
+global $CFG;
+require_once($CFG->dirroot . '/local/message/classes/manager.php');
+require_once($CFG->dirroot . '/local/message/classes/form/edit.php');
 
 $PAGE->set_url(new moodle_url('/local/message/edit.php'));
 $PAGE->set_context(\context_system::instance());
@@ -40,7 +44,7 @@ if ($mform->is_cancelled()) {
     redirect($CFG->wwwroot . '/local/message/manage.php', get_string('canceld', 'local_message'));
 } elseif ($fromform = $mform->get_data()) {
     //insert the data in the db
-    $messageManager = new message_manager();
+    $messageManager = new manager();
     $messageManager->create_message($fromform->messagetext, $fromform->messagetype);
 
     redirect($CFG->wwwroot . '/local/message/manage.php', get_string('updated', 'local_message') . ' ' . $fromform->messagetext);

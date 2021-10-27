@@ -15,22 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * ${PLUGINNAME} file description here.
- *
  * @package    local_message
  * @copyright  2021 SysBind Ltd. <service@sysbind.co.il>
  * @auther     schindlerl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use local_message\manager;
+
+require_once($CFG->dirroot . '/local/message/classes/manager.php');
+
 function local_message_before_footer()
 {
     global $USER;
 
-    $messageManager = new message_manager();
+    $manager = new manager();
 
-
-    $messages = $messageManager->get_Massages($USER->id);
+    $messages = $manager->get_messages($USER->id);
 
     $choices = array();
     $choices['0'] = \core\output\notification::NOTIFY_SUCCESS;
@@ -39,6 +40,6 @@ function local_message_before_footer()
     $choices['3'] = \core\output\notification::NOTIFY_ERROR;
     foreach ($messages as $message) {
         \core\notification::add($message->messagetext, $choices[$message->messagetype]);
-        $messageManager->read_message($message->id, $USER->id);
+        $manager->mark_read_message($message->id, $USER->id);
     }
 }

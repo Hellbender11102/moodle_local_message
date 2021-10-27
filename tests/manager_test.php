@@ -26,9 +26,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+use local_message\manager;
 global $CFG;
 require_once($CFG->dirroot . '/local/message/lib.php');
-require_once($CFG->dirroot . '/local/message/classes/message_manager.php');
 
 class local_message_manager_test extends advanced_testcase
 {
@@ -39,9 +39,9 @@ class local_message_manager_test extends advanced_testcase
     public function test_create_message(){
         $this->resetAfterTest();
         $this->setUser(2);
-        $manager = new message_manager();
+        $manager = new manager();
 
-        $messages = $manager->get_message(2);
+        $messages = $manager->get_messages(2);
         $this->assertEmpty($messages);
 
         $type = \core\output\notification::NOTIFY_SUCCESS;
@@ -51,7 +51,7 @@ class local_message_manager_test extends advanced_testcase
 
         $this->assertTrue($result);
 
-        $messages = $manager->get_message(2);
+        $messages = $manager->get_messages(2);
         $this->assertNotEmpty($messages);
         $this->assertCount(1, $messages);
 
@@ -60,4 +60,41 @@ class local_message_manager_test extends advanced_testcase
         $this->assertEquals($text, $message->messagetext);
         $this->assertEquals($type, $message->messagetype);
     }
+
+    /**
+     * tests gets all unread messages for the given user
+     */
+    public function test_get_messages(){
+        global $DB;
+        $this->resetAfterTest();
+        $this->setUser(2);
+        $manager = new manager();
+
+        $type = \core\output\notification::NOTIFY_SUCCESS;
+        $text = 'Test message';
+
+        $result = $manager->create_message($text . '1', $type);
+        $result = $manager->create_message($text . '2', $type);
+        $result = $manager->create_message($text . '3', $type);
+        $result = $manager->create_message($text . '4', $type);
+
+        $messages = $DB->get_records('local_message');
+
+        foreach ($messages as $id => $message){
+            $manager->mark_read_message($id,1);
+        }
+
+        $messages = $manager->get_messages(2);
+
+        $this->assertCount(4,$messages);
+
+
+        foreach ($messages as $id => $message){
+            $manager->mark_read_message($id,2);
+        }
+        $messages = $manager->get_messages(2);
+
+        $this->assertCount(0,$messages);
+    }
+
 }
