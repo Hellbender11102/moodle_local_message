@@ -36,6 +36,7 @@ $messages = $DB->get_records('local_message');
 
 $templatecontext = (object)[
     'messages' => array_values($messages),
+    'creaturl' => new moodle_url('/local/message/edit.php'),
     'editurl' => new moodle_url('/local/message/edit.php'),
     'btnEdit' => get_string('btnEdit','local_message'),
 ];

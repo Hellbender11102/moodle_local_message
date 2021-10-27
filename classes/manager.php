@@ -20,6 +20,7 @@
  * @auther     schindlerl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace local_message;
 
 use stdClass;
@@ -88,6 +89,37 @@ class manager
             return $DB->get_records_sql($sql, $params);
         } catch (dml_exception $e) {
             return array();
+        }
+    }
+
+    /**
+     * gets a single mesage by its id
+     * @param int $messageid
+     * @throws dml_exception
+     */
+    public function get_message(int $messageid)
+    {
+        global $DB;
+        return $DB->get_record('local_message', ['id' => $messageid]);
+    }
+
+    /**
+     * @param $id
+     * @param $messagetext
+     * @param $messagetype
+     * @return bool
+     */
+    public function update_message($id, $messagetext, $messagetype): bool
+    {
+        global $DB;
+        $object = new stdClass();
+        $object->id = $id;
+        $object->messagetype = $messagetype;
+        $object->messagetext = $messagetext;
+        try {
+            return $DB->update_record('local_message', $object);
+        } catch (dml_exception $e) {
+            return false;
         }
     }
 

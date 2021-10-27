@@ -28,9 +28,13 @@ $string['formButton'] = 'Create message';
 
 $string['btnEdit'] = 'Message edit';
 $string['canceld'] = 'Canceled';
-$string['updated'] = 'You created a message with title';
+$string['updated'] = 'You updated a message with title';
+$string['created'] = 'You created a message with title';
 
 $string['headline'] = 'List of messages';
 $string['type'] = 'Message type';
 $string['tableHeadOne'] = 'Message';
 $string['tableHeadTwo'] = 'Type';
+$string['tableHeadThree'] = '';
+$string['editbutton'] = 'Edit message';
+

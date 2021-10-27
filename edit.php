@@ -35,21 +35,34 @@ $PAGE->set_url(new moodle_url('/local/message/edit.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('formTextfieldName', 'local_message'));
 
+$messageid = optional_param('messageid', null, PARAM_INT);
 
 $mform = new edit();
 
+$messageManager = new manager();
 
 if ($mform->is_cancelled()) {
     //go back to manage page
     redirect($CFG->wwwroot . '/local/message/manage.php', get_string('canceld', 'local_message'));
 } elseif ($fromform = $mform->get_data()) {
     //insert the data in the db
-    $messageManager = new manager();
+
+    if($fromform->id){
+        $messageManager->update_message($fromform->id,$fromform->messagetext, $fromform->messagetype);
+        redirect($CFG->wwwroot . '/local/message/manage.php', get_string('updated', 'local_message') . ' ' . $fromform->messagetext);
+    }
     $messageManager->create_message($fromform->messagetext, $fromform->messagetype);
 
-    redirect($CFG->wwwroot . '/local/message/manage.php', get_string('updated', 'local_message') . ' ' . $fromform->messagetext);
+    redirect($CFG->wwwroot . '/local/message/manage.php', get_string('create', 'local_message') . ' ' . $fromform->messagetext);
 }
 
+if ($messageid) {
+    $message = $messageManager->get_message($messageid);
+    if (!$message) {
+        throw new invalid_parameter_exception('Message not found.');
+    }
+    $mform->set_data($message);
+}
 
 echo $OUTPUT->header();
 
