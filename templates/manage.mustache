@@ -27,18 +27,19 @@
     }
 }}
 <h1>{{#str}} headline, local_message {{/str}}</h1>
-<table>
+<table class="w-100">
     <tr>
         <th class="pr-3">{{#str}} tableHeadTwo, local_message {{/str}}</th>
         <th class="pr-3 pl-6">{{#str}} tableHeadOne, local_message {{/str}}</th>
         <th class="pr-3 pl-6">{{#str}} tableHeadThree, local_message {{/str}}</th>
     </tr>
     {{#messages}}
-        <tr class="table-hover">
+        <tr >
             <td class="pr-3">{{messagetype}}</td>
             <td class="pr-3 pl-6">{{messagetext}}</td>
             <td class="pr-3 pl-6">
-                <input class="btn btn-clipboard border border-dark" type="button" value="{{#str}}editbutton, local_message{{/str}}" onclick="location.href='{{editurl}}?messageid={{id}}'">
+                <input class=" mx-3 btn btn-clipboard border border-dark" type="button" value="{{#str}}editbutton, local_message{{/str}}" onclick="location.href='{{editurl}}?messageid={{id}}'">
+                <input class="local_messageid{{id}} btn btn-clipboard  border-red border btn-danger local_message_delete_button" type="button" value="{{#str}}deletbtn, local_message{{/str}}">
             </td>
         </tr>
     {{/messages}}

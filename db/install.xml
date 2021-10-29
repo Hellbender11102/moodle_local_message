@@ -17,7 +17,7 @@
         <TABLE NAME="local_message_read" COMMENT="each record is a user reacord of a message read">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-                <FIELD NAME="messageid" TYPE="text" LENGTH="100" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="messageid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="userid" TYPE="text" LENGTH="100" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="timeread" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
             </FIELDS>

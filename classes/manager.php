@@ -23,6 +23,7 @@
 
 namespace local_message;
 
+use dml_transaction_exception;
 use stdClass;
 use dml_exception;
 
@@ -121,6 +122,24 @@ class manager
         } catch (dml_exception $e) {
             return false;
         }
+    }
+
+    /**
+     * Deletes message and records for an message id
+     * @param $messageid
+     * @return bool
+     * @throws dml_transaction_exception
+     * @throws dml_exception
+     */
+    public function delete_message($messageid) : bool
+    {
+        global $DB;
+        $transaction = $DB->start_delegated_transaction();
+        $delete_message = $DB->delete_records('local_message', ['id' => $messageid]);
+        $delete_message_read = $DB->delete_records('local_message_read', ['messageid' => $messageid]);
+        if ($delete_message && $delete_message_read)
+            $DB->commit_delegated_transaction($transaction);
+        return true;
     }
 
 

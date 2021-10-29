@@ -31,10 +31,18 @@ $string['canceld'] = 'Canceled';
 $string['updated'] = 'You updated a message with title';
 $string['created'] = 'You created a message with title';
 
+$string['titlemanage'] = 'Message manager';
 $string['headline'] = 'List of messages';
 $string['type'] = 'Message type';
 $string['tableHeadOne'] = 'Message';
 $string['tableHeadTwo'] = 'Type';
 $string['tableHeadThree'] = '';
-$string['editbutton'] = 'Edit message';
+$string['editbutton'] = 'Edit';
+$string['deletbtn'] = 'Delete';
+
+
+$string['delete_title'] = 'Confirm delete message';
+$string['delete_message'] = 'If you want to delete the message you will also erase the complete message history.';
+$string['delete_button'] = 'Delete';
+$string['delete_message_failed'] = 'Message couldn\'t be deleted';
 

@@ -15,15 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Data activity filter version information
+ * local_message
  *
  * @package    local_message
- * @copyright  2019 Shamim Rezaie <shamim@moodle.com>
+ * @copyright  2021 SysBind Ltd. <service@sysbind.co.il>
+ * @auther     schindlerl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->version   = 2021102903;
-$plugin->requires  = 2021052500;  // Requires this Moodle version.
-$plugin->component = 'local_message';
+$functions = array(
+    'local_message_delete_message' => array(           //web service name (unique in all Moodle)
+        'classname'   => 'local_message_external', //class containing the function implementation
+        'methodname'  => 'delete_message',              //name of the function into the class
+        'classpath'   => 'local/message/externallib.php',     //file containing the class (only used for core external function, not needed if your file is 'component/externallib.php'),
+        'description' => 'Delete a message',
+        'type' => 'write',
+        'ajax' => 'true',
+       'capabilities' => 'true',
+    )
+);

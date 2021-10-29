@@ -30,7 +30,10 @@ global $DB;
 
 $PAGE->set_url(new moodle_url('/local/message/manage.php'));
 $PAGE->set_context(\context_system::instance());
-$PAGE->set_title('Message manage');
+$PAGE->set_title(get_string('titlemanage','local_message'));
+
+
+$PAGE->requires->js_call_amd('local_message/confirm');
 
 $messages = $DB->get_records('local_message');
 
