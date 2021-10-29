@@ -27,6 +27,9 @@ require_once($CFG->dirroot . '/local/message/classes/manager.php');
 
 function local_message_before_footer()
 {
+    if(!get_config('local_message', 'enabled'))
+        return;
+
     global $USER;
 
     $manager = new manager();

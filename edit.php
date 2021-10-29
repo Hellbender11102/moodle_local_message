@@ -26,6 +26,11 @@
 use local_message\form\edit;
 use local_message\manager;
 
+
+require_login();
+$context = context_system::instance();
+require_capability('local/message:managemessages', $context);
+
 require_once(__DIR__ . '/../../config.php');
 global $CFG;
 require_once($CFG->dirroot . '/local/message/classes/manager.php');
@@ -53,7 +58,7 @@ if ($mform->is_cancelled()) {
     }
     $messageManager->create_message($fromform->messagetext, $fromform->messagetype);
 
-    redirect($CFG->wwwroot . '/local/message/manage.php', get_string('create', 'local_message') . ' ' . $fromform->messagetext);
+    redirect($CFG->wwwroot . '/local/message/manage.php', get_string('created', 'local_message') . ' ' . $fromform->messagetext);
 }
 
 if ($messageid) {

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * message file description here.
+ * creates special access for users
  *
  * @package    local_message
  * @copyright  2021 SysBind Ltd. <service@sysbind.co.il>
@@ -23,33 +23,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__ . '/../../config.php');
-
-global $CFG;
-global $DB;
-
-require_login();
-$context = context_system::instance();
-require_capability('local/message:managemessages', $context);
-
-$PAGE->set_url(new moodle_url('/local/message/manage.php'));
-$PAGE->set_context(\context_system::instance());
-$PAGE->set_title(get_string('titlemanage','local_message'));
-
-
-$PAGE->requires->js_call_amd('local_message/confirm');
-
-$messages = $DB->get_records('local_message');
-
-$templatecontext = (object)[
-    'messages' => array_values($messages),
-    'creaturl' => new moodle_url('/local/message/edit.php'),
-    'editurl' => new moodle_url('/local/message/edit.php'),
-    'btnEdit' => get_string('btnEdit','local_message'),
+$capabilities = [
+    'local/message:managemessages' => [
+        'riskbitmask' => RISK_SPAM,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => [
+            'manager' => CAP_ALLOW
+        ],
+    ],
 ];
-
-echo $OUTPUT->header();
-
-echo $OUTPUT->render_from_template('local_message/manage', $templatecontext);
-
-echo $OUTPUT->footer();

@@ -15,41 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * message file description here.
+ * local_message file description here.
  *
  * @package    local_message
  * @copyright  2021 SysBind Ltd. <service@sysbind.co.il>
  * @auther     schindlerl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+if ($hassiteconfig) { // needs this condition or there is error on login page
 
-require_once(__DIR__ . '/../../config.php');
+    $ADMIN->add('localplugins', new admin_category( 'local_message_category',  get_string('pluginname','local_message')));
 
-global $CFG;
-global $DB;
+    $settings = new admin_settingpage('local_message',  get_string('pluginname','local_message'));
+    $ADMIN->add('local_message_category', $settings);
 
-require_login();
-$context = context_system::instance();
-require_capability('local/message:managemessages', $context);
+    $settings->add(new admin_setting_configcheckbox('local_message/enabled',
+        get_string('enable_setting','local_message'),
+        get_string('description_enable_setting','local_message'), '1'));
 
-$PAGE->set_url(new moodle_url('/local/message/manage.php'));
-$PAGE->set_context(\context_system::instance());
-$PAGE->set_title(get_string('titlemanage','local_message'));
+    $ADMIN->add('local_message_category', new admin_externalpage('local_message', get_string('pluginnameext','local_message'),
+        $CFG->wwwroot.'/local/message/manage.php'));
 
-
-$PAGE->requires->js_call_amd('local_message/confirm');
-
-$messages = $DB->get_records('local_message');
-
-$templatecontext = (object)[
-    'messages' => array_values($messages),
-    'creaturl' => new moodle_url('/local/message/edit.php'),
-    'editurl' => new moodle_url('/local/message/edit.php'),
-    'btnEdit' => get_string('btnEdit','local_message'),
-];
-
-echo $OUTPUT->header();
-
-echo $OUTPUT->render_from_template('local_message/manage', $templatecontext);
-
-echo $OUTPUT->footer();
+}

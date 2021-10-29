@@ -22,11 +22,19 @@
  * @auther     schindlerl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+$string['pluginname'] = 'Broadcast messages';
+$string['pluginnameext'] = 'Manage broadcastet messages';
+$string['local_message_category'] = 'Message Broadcast';
+
+$string['enable_setting'] = 'Enable';
+$string['description_enable_setting'] = 'Disable to stop the broadcast of messsages';
+
 $string['formTextfieldName'] = 'Message text';
 $string['formTextfieldInput'] = 'Please enter message';
 $string['formButton'] = 'Create message';
 
 $string['btnEdit'] = 'Message edit';
+$string['btnCreate'] = 'Create message';
 $string['canceld'] = 'Canceled';
 $string['updated'] = 'You updated a message with title';
 $string['created'] = 'You created a message with title';
@@ -46,3 +54,5 @@ $string['delete_message'] = 'If you want to delete the message you will also era
 $string['delete_button'] = 'Delete';
 $string['delete_message_failed'] = 'Message couldn\'t be deleted';
 
+
+$string['message:managemessages'] = 'Manage messages';
